@@ -3,13 +3,14 @@ package configs
 import (
 	"database/sql"
 	"log"
+	"os"
 	"time"
 
 	_ "github.com/lib/pq"
 )
 
 func InitDB() *sql.DB {
-	connStr := "postgres://adminpostgres:87654321@localhost:5435/emasdigital?sslmode=disable"
+	connStr := os.Getenv("PG_DB_STRING")
 
 	db, err := sql.Open("postgres", connStr)
 	if err != nil {
