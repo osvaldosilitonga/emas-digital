@@ -1,0 +1,18 @@
+version: "3.8"
+
+services:
+  db:
+    image: postgres:16-alpine
+    ports:
+      - 5435:5432
+    environment:
+      - POSTGRES_PASSWORD=87654321
+      - POSTGRES_USER=adminpostgres
+      - POSTGRES_DB=emasdigital
+    networks:
+      - default
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U adminpostgres -d emasdigital"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
