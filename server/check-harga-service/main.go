@@ -1,6 +1,7 @@
 package main
 
 import (
+	"check-harga-service/configs"
 	"check-harga-service/routes"
 	"fmt"
 	"log"
@@ -24,6 +25,8 @@ func main() {
 		if err := recover(); err != nil {
 			log.Println("Error Panic: ", err)
 		}
+
+		configs.InitDB().Close()
 	}()
 
 	r := mux.NewRouter()

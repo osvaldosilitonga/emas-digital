@@ -3,16 +3,17 @@ package routes
 import (
 	"check-harga-service/configs"
 	"check-harga-service/controllers"
-	"log"
+	"check-harga-service/repository"
 
 	"github.com/gorilla/mux"
 )
 
 func Routes(r *mux.Router) {
 	db := configs.InitDB()
-	if err := db.Ping(); err != nil {
-		log.Println("DB Connection Fail")
-	}
 
-	r.HandleFunc("/api/check-harga", controllers.Find).Methods("GET")
+	hargaRepository := repository.NewHargaRepository(db)
+
+	checkHargaController := controllers.NewCheckHarga(hargaRepository)
+
+	r.HandleFunc("/api/check-harga", checkHargaController.FindOne).Methods("GET")
 }
