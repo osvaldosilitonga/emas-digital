@@ -1,0 +1,218 @@
+_type: export
+__export_format: 4
+__export_date: 2024-01-22T11:05:17.688Z
+__export_source: insomnia.desktop.app:v8.6.0
+resources:
+  - _id: req_0dd02e24a4c44d61aa6c9ccd6c1b23f9
+    parentId: wrk_628679a645c741d9aa90032b24be1a39
+    modified: 1705909607302
+    created: 1705909396891
+    url: localhost:3005/api/buyback
+    name: Buyback
+    description: ""
+    method: POST
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"gram": 0.2,
+        	"harga": 60000,
+        	"norek": "w001"
+        }
+    parameters: []
+    headers:
+      - name: Content-Type
+        value: application/json
+      - name: User-Agent
+        value: insomnia/8.6.0
+    authentication: {}
+    metaSortKey: -1705909396891
+    isPrivate: false
+    pathParameters: []
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: wrk_628679a645c741d9aa90032b24be1a39
+    parentId: null
+    modified: 1705813097132
+    created: 1705813097132
+    name: Emas Digital
+    description: ""
+    scope: collection
+    _type: workspace
+  - _id: req_02d586e437fb4087bc62452e007300be
+    parentId: wrk_628679a645c741d9aa90032b24be1a39
+    modified: 1705902074588
+    created: 1705901169909
+    url: localhost:3004/api/check-mutasi
+    name: Check Mutasi
+    description: ""
+    method: POST
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"norek": "w001",
+        	"start_date": 1705683600000,
+        	"end_date": 7058564000000
+        }
+    parameters: []
+    headers:
+      - name: Content-Type
+        value: application/json
+      - name: User-Agent
+        value: insomnia/8.6.0
+    authentication: {}
+    metaSortKey: -1705901169909
+    isPrivate: false
+    pathParameters: []
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_96297ff9d7314f839056b6d150955971
+    parentId: wrk_628679a645c741d9aa90032b24be1a39
+    modified: 1705897875810
+    created: 1705897740433
+    url: localhost:3003/api/check-saldo
+    name: Check Saldo
+    description: ""
+    method: POST
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"norek": "w001"
+        }
+    parameters: []
+    headers:
+      - name: Content-Type
+        value: application/json
+      - name: User-Agent
+        value: insomnia/8.6.0
+    authentication: {}
+    metaSortKey: -1705897740433
+    isPrivate: false
+    pathParameters: []
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_22272e7c626c4a9e82c6bf23e91aff9c
+    parentId: wrk_628679a645c741d9aa90032b24be1a39
+    modified: 1705908122459
+    created: 1705863074020
+    url: localhost:3002/api/topup
+    name: Topup
+    description: ""
+    method: POST
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"gram": 0.135,
+        	"harga": 70000,
+        	"norek": "w001"
+        }
+    parameters: []
+    headers:
+      - name: Content-Type
+        value: application/json
+      - name: User-Agent
+        value: insomnia/8.6.0
+    authentication: {}
+    metaSortKey: -1705863074020
+    isPrivate: false
+    pathParameters: []
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_2af116ff937d45cd8c3e5f45d27c0570
+    parentId: wrk_628679a645c741d9aa90032b24be1a39
+    modified: 1705858061041
+    created: 1705839292944
+    url: localhost:3001/api/check-harga
+    name: Check Harga
+    description: ""
+    method: GET
+    body: {}
+    parameters: []
+    headers:
+      - name: User-Agent
+        value: insomnia/8.6.0
+    authentication: {}
+    metaSortKey: -1705839292944
+    isPrivate: false
+    pathParameters: []
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_5b59a68c129d49f8bc70d3ba7c9325b0
+    parentId: wrk_628679a645c741d9aa90032b24be1a39
+    modified: 1705856148337
+    created: 1705813102949
+    url: localhost:3000/api/input-harga
+    name: Input Harga Service
+    description: ""
+    method: POST
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"admin_id": "a001",
+        	"harga_topup": 120000,
+        	"harga_buyback": 950000
+        }
+    parameters: []
+    headers:
+      - name: Content-Type
+        value: application/json
+      - name: User-Agent
+        value: insomnia/8.5.1
+    authentication: {}
+    metaSortKey: -1705813102949
+    isPrivate: false
+    pathParameters: []
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: env_601eb6fa8bb29ca7eec74fd9fc555733a9174e93
+    parentId: wrk_628679a645c741d9aa90032b24be1a39
+    modified: 1705813097142
+    created: 1705813097142
+    name: Base Environment
+    data: {}
+    dataPropertyOrder: null
+    color: null
+    isPrivate: false
+    metaSortKey: 1705813097142
+    _type: environment
+  - _id: jar_601eb6fa8bb29ca7eec74fd9fc555733a9174e93
+    parentId: wrk_628679a645c741d9aa90032b24be1a39
+    modified: 1705813097146
+    created: 1705813097146
+    name: Default Jar
+    cookies: []
+    _type: cookie_jar
