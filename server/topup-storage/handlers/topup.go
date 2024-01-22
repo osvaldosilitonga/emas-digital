@@ -33,12 +33,6 @@ func (th *TopupHandler) Topup(message *dto.Topup) error {
 	f, _ := strconv.ParseFloat(s, 32)
 	message.Saldo = float32(f)
 
-	gram := fmt.Sprintf("%.3f", message.Gram)
-	g, _ := strconv.ParseFloat(gram, 32)
-	message.Gram = float32(g)
-
-	fmt.Println(saldo, "<------ saldo")
-
 	if err := th.TransactionRepo.TopupSaldo(ctx, message.NoRek, message.Saldo); err != nil {
 		return err
 	}
