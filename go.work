@@ -1,6 +1,7 @@
 go 1.21.5
 
 use (
+	./server/api-gateway
 	./server/buyback-service
 	./server/buyback-storage
 	./server/check-harga-service
