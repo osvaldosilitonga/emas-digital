@@ -19,7 +19,7 @@ func NewHargaRepository(db *sql.DB) *HargaRepository {
 func (h *HargaRepository) FindOne(ctx context.Context) (dto.Data, error) {
 	data := dto.Data{}
 
-	query := `SELECT topup, buyback
+	query := `SELECT id, topup, buyback
 	FROM prices
 	ORDER BY created_at DESC
 	LIMIT 1`
@@ -31,7 +31,7 @@ func (h *HargaRepository) FindOne(ctx context.Context) (dto.Data, error) {
 	defer row.Close()
 
 	for row.Next() {
-		if err := row.Scan(&data.HargaTopup, &data.HargaBuyback); err != nil {
+		if err := row.Scan(&data.ID, &data.HargaTopup, &data.HargaBuyback); err != nil {
 			return data, err
 		}
 	}

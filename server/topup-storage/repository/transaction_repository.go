@@ -18,9 +18,9 @@ func NewTransactionRepository(db *sql.DB) *TransactionRepository {
 }
 
 func (tr *TransactionRepository) SaveTransaction(ctx context.Context, data *dto.Topup) error {
-	query := `INSERT INTO transactions (wallet_id, type, gram, price, balance) VALUES ($1, $2, $3, $4, $5)`
+	query := `INSERT INTO transactions (wallet_id, type, gram, price_id, balance) VALUES ($1, $2, $3, $4, $5)`
 
-	_, err := tr.DB.ExecContext(ctx, query, data.NoRek, "topup", data.Gram, data.Harga, data.Saldo)
+	_, err := tr.DB.ExecContext(ctx, query, data.NoRek, "topup", data.Gram, data.PriceID, data.Saldo)
 	if err != nil {
 		return err
 	}

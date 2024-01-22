@@ -3,7 +3,6 @@ package handlers
 import (
 	"context"
 	"fmt"
-	"log"
 	"strconv"
 	"time"
 	"topup-storage/dto"
@@ -32,11 +31,15 @@ func (th *TopupHandler) Topup(message *dto.Topup) error {
 	saldo += message.Gram
 	s := fmt.Sprintf("%.3f", saldo)
 	f, _ := strconv.ParseFloat(s, 32)
-	saldo = float32(f)
+	message.Saldo = float32(f)
 
-	log.Println(saldo, "<---- saldo")
+	gram := fmt.Sprintf("%.3f", message.Gram)
+	g, _ := strconv.ParseFloat(gram, 32)
+	message.Gram = float32(g)
 
-	if err := th.TransactionRepo.TopupSaldo(ctx, message.NoRek, saldo); err != nil {
+	fmt.Println(saldo, "<------ saldo")
+
+	if err := th.TransactionRepo.TopupSaldo(ctx, message.NoRek, message.Saldo); err != nil {
 		return err
 	}
 

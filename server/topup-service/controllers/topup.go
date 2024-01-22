@@ -45,7 +45,7 @@ func Add(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	res, err := handlers.CheckHarga(payload.Harga)
+	res, id, err := handlers.CheckHarga(payload.Harga)
 	if err != nil {
 		helpers.ResponseJson(w, http.StatusInternalServerError, &dto.ErrorResponse{
 			Err:     true,
@@ -63,6 +63,8 @@ func Add(w http.ResponseWriter, r *http.Request) {
 		})
 		return
 	}
+
+	payload.PriceID = id
 
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second*5)
 	defer cancel()

@@ -9,7 +9,7 @@ import (
 	"topup-service/dto"
 )
 
-func CheckHarga(harga int) (bool, error) {
+func CheckHarga(harga int) (bool, string, error) {
 	client := &http.Client{
 		Timeout: time.Second * 5,
 	}
@@ -17,23 +17,23 @@ func CheckHarga(harga int) (bool, error) {
 	url := os.Getenv("URL_CHECK_HARGA")
 	request, err := http.NewRequest("GET", url, nil)
 	if err != nil {
-		return false, err
+		return false, "", err
 	}
 
 	response, err := client.Do(request)
 	if err != nil {
-		return false, err
+		return false, "", err
 	}
 	defer response.Body.Close()
 
 	data := dto.APIResponse{}
 	if err := json.NewDecoder(response.Body).Decode(&data); err != nil {
-		return false, errors.New("Fail to get response")
+		return false, "", errors.New("Fail to get response")
 	}
 
 	if data.Data.HargaTopup != harga {
-		return false, nil
+		return false, "", nil
 	}
 
-	return true, nil
+	return true, data.Data.ID, nil
 }

@@ -6,8 +6,9 @@ type ErrorResponse struct {
 }
 
 type Data struct {
-	HargaBuyback int `json:"harga_buyback"`
-	HargaTopup   int `json:"harga_topup"`
+	ID           string `json:"id"`
+	HargaBuyback int    `json:"harga_buyback"`
+	HargaTopup   int    `json:"harga_topup"`
 }
 
 type SuccessResponse struct {
