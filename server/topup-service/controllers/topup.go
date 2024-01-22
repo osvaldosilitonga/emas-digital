@@ -3,8 +3,10 @@ package controllers
 import (
 	"context"
 	"encoding/json"
+	"fmt"
 	"log"
 	"net/http"
+	"strings"
 	"time"
 	"topup-service/dto"
 	"topup-service/handlers"
@@ -43,6 +45,22 @@ func Add(w http.ResponseWriter, r *http.Request) {
 		})
 		log.Println(err.Error())
 		return
+	}
+
+	// check digit gram
+	gramStr := fmt.Sprintf("%v", payload.Gram)
+	dotIndex := strings.Index(gramStr, ".")
+	if dotIndex != -1 {
+		decimalDigits := len(gramStr) - dotIndex - 1
+		if decimalDigits > 3 {
+			helpers.ResponseJson(w, http.StatusBadRequest, &dto.ErrorResponse{
+				Err:     true,
+				ReffID:  payload.ReffID,
+				Message: "maksimal 3 digit dibelakang koma",
+			})
+
+			return
+		}
 	}
 
 	res, id, err := handlers.CheckHarga(payload.Harga)
