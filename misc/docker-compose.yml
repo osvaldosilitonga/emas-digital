@@ -12,6 +12,7 @@ services:
     networks:
       - default
     healthcheck:
+      # test: ["CMD", "curl", "-f", "http://localhost/5435"]
       test: ["CMD-SHELL", "pg_isready -U adminpostgres -d emasdigital"]
       interval: 10s
       timeout: 5s
