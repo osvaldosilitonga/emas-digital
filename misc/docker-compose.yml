@@ -17,22 +17,6 @@ services:
       timeout: 5s
       retries: 5
 
-  # db:
-  #   image: postgres:16-alpine
-  #   ports:
-  #     - "3306:3306"
-  #   restart: always
-  #   environment:
-  #     POSTGRES_USER: adminpostgres
-  #     POSTGRES_PASSWORD: 87654321
-  #     POSTGRES_DB: emasdigital
-  #   healthcheck:
-  #     test:
-  #       ["CMD", "pg_isready", "-q", "-d", "emasdigital", "-U", "adminpostgres"]
-  #     interval: 1s
-  #     timeout: 5s
-  #     retries: 10
-
   zoo1:
     image: confluentinc/cp-zookeeper:7.3.2
     hostname: zoo1
@@ -68,6 +52,24 @@ services:
       KAFKA_ALLOW_EVERYONE_IF_NO_ACL_FOUND: "true"
     depends_on:
       - zoo1
+
+  init-kafka:
+    image: confluentinc/cp-kafka:7.3.2
+    depends_on:
+      - kafka1
+    entrypoint: ["/bin/sh", "-c"]
+    command: "
+      # blocks until kafka is reachable
+      kafka-topics --bootstrap-server kafka1:29092 --list
+
+      echo -e 'Creating kafka topics'
+      kafka-topics --bootstrap-server kafka1:29092 --create --if-not-exists --topic buyback --replication-factor 1 --partitions 1
+      kafka-topics --bootstrap-server kafka1:29092 --create --if-not-exists --topic input-harga --replication-factor 1 --partitions 1
+      kafka-topics --bootstrap-server kafka1:29092 --create --if-not-exists --topic topup --replication-factor 1 --partitions 1
+
+      echo -e 'Successfully created the following topics:'
+      kafka-topics --bootstrap-server kafka1:29092 --list
+      "
 
   kafka-ui:
     container_name: kafka-ui
