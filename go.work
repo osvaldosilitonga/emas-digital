@@ -1,6 +1,7 @@
 go 1.21.5
 
 use (
+	./server/buyback-service
 	./server/check-harga-service
 	./server/check-mutasi-service
 	./server/check-saldo-service
