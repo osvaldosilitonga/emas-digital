@@ -3,9 +3,9 @@ CREATE TABLE IF NOT EXISTS transactions (
     wallet_id VARCHAR NOT NULL REFERENCES wallets(id),
     date BIGINT DEFAULT EXTRACT(epoch FROM NOW()) * 1000,
     type VARCHAR NOT NULL,
-    gram FLOAT NOT NULL CHECK (gram >= 0.001),
+    gram FLOAT(3) NOT NULL CHECK (gram >= 0.001),
     price_id VARCHAR NOT NULL REFERENCES prices(id),
-    balance FLOAT NOT NULL
+    balance FLOAT(3) NOT NULL
 );
 
 INSERT INTO transactions(wallet_id, type, gram, price_id, balance, date)
