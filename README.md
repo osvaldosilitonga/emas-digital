@@ -1,5 +1,9 @@
 # Jojonomic - Emas Digital
 
+## Database Schema
+
+![Database Schema](./misc/docs/db_schema.png)
+
 ## How to Use
 
 - Clone Repo:
