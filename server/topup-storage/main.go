@@ -31,7 +31,7 @@ func main() {
 	topupHandler := handlers.NewTopupHandler(transactionRepository)
 
 	conf := kafka.ReaderConfig{
-		Brokers:     []string{"localhost:9092"},
+		Brokers:     []string{"host.docker.internal:29092"},
 		Topic:       "topup",
 		GroupID:     "topup",
 		StartOffset: kafka.LastOffset,

@@ -9,6 +9,7 @@ import (
 	"os"
 	"time"
 
+	"github.com/gorilla/handlers"
 	"github.com/gorilla/mux"
 	"github.com/joho/godotenv"
 )
@@ -31,14 +32,19 @@ func main() {
 
 	r := mux.NewRouter()
 
+	r.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		w.Write([]byte("This is a catch-all route"))
+	})
+	loggedRouter := handlers.LoggingHandler(os.Stdout, r)
+
 	routes.Routes(r)
 
-	host := os.Getenv("SERVER_HOST")
+	// host := os.Getenv("SERVER_HOST")
 	port := os.Getenv("SERVER_PORT")
 
 	srv := &http.Server{
-		Handler:      r,
-		Addr:         fmt.Sprintf("%s:%s", host, port),
+		Handler:      loggedRouter,
+		Addr:         fmt.Sprintf(":%s", port),
 		WriteTimeout: 10 * time.Second,
 		ReadTimeout:  10 * time.Second,
 	}

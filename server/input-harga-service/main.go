@@ -30,12 +30,12 @@ func main() {
 
 	routes.Routes(r)
 
-	host := os.Getenv("SERVER_HOST")
+	// host := os.Getenv("SERVER_HOST")
 	port := os.Getenv("SERVER_PORT")
 
 	srv := &http.Server{
 		Handler:      r,
-		Addr:         fmt.Sprintf("%s:%s", host, port),
+		Addr:         fmt.Sprintf(":%s", port),
 		WriteTimeout: 10 * time.Second,
 		ReadTimeout:  10 * time.Second,
 	}

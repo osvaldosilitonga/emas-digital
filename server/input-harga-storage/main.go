@@ -28,7 +28,7 @@ func main() {
 	hargaRepository := repository.NewHargaRepository(db)
 
 	conf := kafka.ReaderConfig{
-		Brokers:     []string{"localhost:9092"},
+		Brokers:     []string{"host.docker.internal:29092"},
 		Topic:       "input-harga",
 		GroupID:     "input-harga",
 		StartOffset: kafka.LastOffset,

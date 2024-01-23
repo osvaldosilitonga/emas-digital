@@ -11,7 +11,7 @@ import (
 
 func TopupPublish(ctx context.Context, data *dto.RequestPayload) error {
 	w := &kafka.Writer{
-		Addr:                   kafka.TCP("localhost:9092"),
+		Addr:                   kafka.TCP("host.docker.internal:29092"),
 		Topic:                  "topup",
 		Balancer:               &kafka.LeastBytes{},
 		AllowAutoTopicCreation: true,
@@ -30,12 +30,12 @@ func TopupPublish(ctx context.Context, data *dto.RequestPayload) error {
 		},
 	)
 	if err != nil {
-		log.Fatal("failed to write messages:", err)
+		log.Println("failed to write messages:", err)
 		return err
 	}
 
 	if err := w.Close(); err != nil {
-		log.Fatal("failed to close writer:", err)
+		log.Println("failed to close writer:", err)
 		return err
 	}
 

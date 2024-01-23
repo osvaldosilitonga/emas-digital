@@ -28,10 +28,10 @@ func main() {
 
 	transactionRepository := repository.NewTransactionRepository(db)
 
-	topupHandler := handlers.NewBuybackHandler(transactionRepository)
+	buybackHandler := handlers.NewBuybackHandler(transactionRepository)
 
 	conf := kafka.ReaderConfig{
-		Brokers:     []string{"localhost:9092"},
+		Brokers:     []string{"host.docker.internal:29092"},
 		Topic:       "buyback",
 		GroupID:     "buyback",
 		StartOffset: kafka.LastOffset,
@@ -52,7 +52,7 @@ func main() {
 
 				_ = json.Unmarshal(message.Value, &data)
 
-				err := topupHandler.Buyback(&data)
+				err := buybackHandler.Buyback(&data)
 				if err == nil {
 					log.Printf("Data [%s] inserted successfully\n", data.ReffID)
 					break

@@ -22,7 +22,9 @@ func InitDB() *sql.DB {
 	db.SetConnMaxLifetime(time.Hour)
 
 	if err := db.Ping(); err != nil {
-		log.Println("Connection Fail")
+		log.Println("DB Connection Fail")
+		log.Println("---->", connStr)
+		log.Println("[ERR]:", err)
 	} else {
 		log.Println("DB Connected Successfully")
 	}

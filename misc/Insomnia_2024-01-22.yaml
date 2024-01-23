@@ -1,6 +1,6 @@
 _type: export
 __export_format: 4
-__export_date: 2024-01-22T11:05:17.688Z
+__export_date: 2024-01-23T06:22:46.463Z
 __export_source: insomnia.desktop.app:v8.6.0
 resources:
   - _id: req_0dd02e24a4c44d61aa6c9ccd6c1b23f9
@@ -143,7 +143,7 @@ resources:
     _type: request
   - _id: req_2af116ff937d45cd8c3e5f45d27c0570
     parentId: wrk_628679a645c741d9aa90032b24be1a39
-    modified: 1705858061041
+    modified: 1705933396835
     created: 1705839292944
     url: localhost:3001/api/check-harga
     name: Check Harga

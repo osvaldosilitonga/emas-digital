@@ -3,6 +3,7 @@ package handlers
 import (
 	"encoding/json"
 	"errors"
+	"log"
 	"net/http"
 	"os"
 	"time"
@@ -10,6 +11,12 @@ import (
 )
 
 func CheckHarga(harga int) (bool, string, error) {
+	defer func() {
+		if err := recover(); err != nil {
+			log.Println("Error Panic: ", err)
+		}
+	}()
+
 	client := &http.Client{
 		Timeout: time.Second * 5,
 	}

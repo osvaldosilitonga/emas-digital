@@ -12,7 +12,7 @@ services:
     networks:
       - default
     healthcheck:
-      # test: ["CMD", "curl", "-f", "http://localhost/5435"]
+      # test: ["CMD-SHELL", "pg_isready -U adminpostgres -d zicare-clinic"]
       test: ["CMD-SHELL", "pg_isready -U adminpostgres -d emasdigital"]
       interval: 10s
       timeout: 5s
@@ -53,10 +53,18 @@ services:
       KAFKA_ALLOW_EVERYONE_IF_NO_ACL_FOUND: "true"
     depends_on:
       - zoo1
+    healthcheck:
+      test: nc -z localhost 9092 || exit -1
+      start_period: 15s
+      interval: 5s
+      timeout: 10s
+      retries: 10
 
   init-kafka:
     image: confluentinc/cp-kafka:7.3.2
     depends_on:
+      # kafka1:
+      #   condition: service_healthy
       - kafka1
     entrypoint: ["/bin/sh", "-c"]
     command: "
@@ -64,9 +72,9 @@ services:
       kafka-topics --bootstrap-server kafka1:29092 --list
 
       echo -e 'Creating kafka topics'
+      kafka-topics --bootstrap-server kafka1:29092 --create --if-not-exists --topic topup --replication-factor 1 --partitions 1
       kafka-topics --bootstrap-server kafka1:29092 --create --if-not-exists --topic buyback --replication-factor 1 --partitions 1
       kafka-topics --bootstrap-server kafka1:29092 --create --if-not-exists --topic input-harga --replication-factor 1 --partitions 1
-      kafka-topics --bootstrap-server kafka1:29092 --create --if-not-exists --topic topup --replication-factor 1 --partitions 1
 
       echo -e 'Successfully created the following topics:'
       kafka-topics --bootstrap-server kafka1:29092 --list
@@ -84,3 +92,94 @@ services:
       KAFKA_CLUSTERS_0_NAME: local
       KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka1:29092
       KAFKA_CLUSTERS_0_ZOOKEEPER: zoo1:2181
+
+  buyback-service:
+    build:
+      context: ./server/buyback-service
+    ports:
+      - "3005:3005"
+    networks:
+      - default
+    depends_on:
+      db:
+        condition: service_healthy
+
+  check-harga-service:
+    build:
+      context: ./server/check-harga-service
+    ports:
+      - "3001:3001"
+    depends_on:
+      db:
+        condition: service_healthy
+
+  check-mutasi-service:
+    build:
+      context: ./server/check-mutasi-service
+    ports:
+      - "3004:3004"
+    networks:
+      - default
+    depends_on:
+      db:
+        condition: service_healthy
+
+  check-saldo-service:
+    build:
+      context: ./server/check-saldo-service
+    ports:
+      - "3003:3003"
+    networks:
+      - default
+    depends_on:
+      db:
+        condition: service_healthy
+
+  input-harga-service:
+    build:
+      context: ./server/input-harga-service
+    ports:
+      - "3000:3000"
+    networks:
+      - default
+    depends_on:
+      db:
+        condition: service_healthy
+
+  topup-service:
+    build:
+      context: ./server/topup-service
+    ports:
+      - "3002:3002"
+    networks:
+      - default
+    depends_on:
+      db:
+        condition: service_healthy
+
+  buyback-storage:
+    build:
+      context: ./server/buyback-storage
+    networks:
+      - default
+    depends_on:
+      kafka1:
+        condition: service_healthy
+
+  input-harga-storage:
+    build:
+      context: ./server/input-harga-storage
+    networks:
+      - default
+    depends_on:
+      kafka1:
+        condition: service_healthy
+
+  topup-storage:
+    build:
+      context: ./server/topup-storage
+    networks:
+      - default
+    depends_on:
+      kafka1:
+        condition: service_healthy
